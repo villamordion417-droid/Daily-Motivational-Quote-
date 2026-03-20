@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsubscribe from Quotes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.4s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+            max-width: 520px;
+            width: 100%;
+            padding: 60px 45px;
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #1a202c;
+            margin-bottom: 12px;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .icon {
+            text-align: center;
+            font-size: 70px;
+            margin-bottom: 25px;
+            display: block;
+            animation: wave 0.6s ease-in-out;
+        }
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+        p {
+            color: #4a5568;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 30px 0;
+        }
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+        }
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        button:hover::before {
+            left: 100%;
+        }
+        .unsubscribe-btn {
+            background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);
+        }
+        .unsubscribe-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(244, 63, 94, 0.4);
+        }
+        .cancel-btn {
+            background: #edf2f7;
+            color: #667eea;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 13px 30px;
+            border-radius: 10px;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+        }
+        .cancel-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid #f59e0b;
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            color: #92400e;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .warning strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #78350f;
+            font-weight: 700;
+        }
+        .info {
+            background: #d1ecf1;
+            border-left: 5px solid #06b6d4;
+            padding: 18px 20px;
+            border-radius: 10px;
+            color: #0c5460;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 25px;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 45px 25px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .icon {
+                font-size: 50px;
+            }
+            button {
+                padding: 13px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">👋</div>
+        <h1>We'll Miss You!</h1>
+        <p>
+            Are you sure you want to unsubscribe from daily motivational quotes? 
+            You can always subscribe again anytime.
+        </p>
+        
+        <div class="warning">
+            <strong>⚠️ Heads Up!</strong>
+            After unsubscribing, you won't receive daily quotes anymore. You can resubscribe at any time.
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="unsubscribe-btn">Yes, Unsubscribe Me</button>
+        </form>
+
+        <a href="{% url 'quote_subscription_status' %}" class="cancel-btn">← Keep My Subscription</a>
+
+        <div class="info">
+            💡 If you're unsubscribing due to too many emails, you can adjust your preferred delivery time instead!
+        </div>
+    </div>
+</body>
+</html>

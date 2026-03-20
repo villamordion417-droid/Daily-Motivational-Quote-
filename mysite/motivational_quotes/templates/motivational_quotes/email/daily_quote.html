@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Daily Motivational Quote</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .greeting {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        .quote-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .quote-text {
+            font-size: 18px;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        .quote-author {
+            font-size: 14px;
+            margin-top: 15px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        .category {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+        .cta-button {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .button {
+            background-color: #667eea;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #764ba2;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #95a5a6;
+            margin-top: 30px;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 20px;
+        }
+        .motivation-tip {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .motivation-tip p {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Daily Motivation ✨</h1>
+            <p class="greeting">Good morning, {{ user_name }}!</p>
+        </div>
+
+        <p style="text-align: center; color: #7f8c8d;">
+            Here's your daily dose of inspiration to keep you motivated:
+        </p>
+
+        <div class="quote-section">
+            <div class="quote-text">
+                "{{ quote.text }}"
+            </div>
+            <div class="quote-author">
+                — {{ quote.author }}
+            </div>
+            <div class="category">
+                {{ quote.get_category_display }}
+            </div>
+        </div>
+
+        <div class="motivation-tip">
+            <p>
+                <strong>💡 Remember:</strong> Every day is a new opportunity to grow, achieve your goals, 
+                and make a positive impact. You have the strength to overcome any challenge!
+            </p>
+        </div>
+
+        <div class="cta-button">
+            <a href="{{ site_url }}/quotes/status/" class="button">View More Quotes</a>
+        </div>
+
+        <div class="footer">
+            <p>
+                You're receiving this email because you've subscribed to our daily motivational quotes.
+            </p>
+            <p>
+                <a href="{{ unsubscribe_url }}" style="color: #667eea; text-decoration: none;">
+                    Unsubscribe from daily quotes
+                </a>
+            </p>
+            <p>
+                &copy; 2026 Daily Motivational Quotes. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

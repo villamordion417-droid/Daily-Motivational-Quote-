@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe to Motivational Quotes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.4s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+            max-width: 520px;
+            width: 100%;
+            padding: 60px 45px;
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #1a202c;
+            margin-bottom: 12px;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .icon {
+            text-align: center;
+            font-size: 70px;
+            margin-bottom: 25px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        p {
+            color: #4a5568;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin: 30px 0;
+        }
+        label {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        input[type="email"] {
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            margin-bottom: 22px;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+            color: #1a202c;
+        }
+        input[type="email"]::placeholder {
+            color: #a0aec0;
+        }
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 8px 0;
+            letter-spacing: 0.4px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        button:hover::before {
+            left: 100%;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+        .back-btn {
+            background: #edf2f7;
+            color: #667eea;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .benefits {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 28px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        .benefits:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+        }
+        .benefits h3 {
+            color: #667eea;
+            margin-bottom: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .benefits ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .benefits li {
+            color: #4a5568;
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .benefits li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .messages {
+            margin-bottom: 25px;
+        }
+        .message {
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            animation: slideIn 0.4s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #bbf7d0;
+        }
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #fecaca;
+        }
+        .message.info {
+            background: #cffafe;
+            color: #164e63;
+            border: 2px solid #a5f3fc;
+        }
+        .privacy {
+            font-size: 12px;
+            margin-top: 25px;
+            color: #718096;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 45px 25px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .icon {
+                font-size: 50px;
+            }
+            input[type="email"] {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">✨</div>
+        <h1>Get Daily Inspiration</h1>
+        <p>
+            Subscribe to receive a motivational quote every day in your inbox. 
+            Keep yourself inspired and motivated!
+        </p>
+        
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="benefits">
+            <h3>Why Subscribe?</h3>
+            <ul>
+                <li>Daily motivation delivered to your inbox</li>
+                <li>Curated quotes from great thinkers</li>
+                <li>Customize your delivery time</li>
+                <li>Unsubscribe anytime</li>
+            </ul>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="email">Email Address:</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="your.email@example.com" 
+                required
+            >
+            <button type="submit">Subscribe Now</button>
+        </form>
+
+        <a href="{% url 'home' %}" class="back-btn">← Back to Home</a>
+
+        <p class="privacy">
+            We respect your privacy. Unsubscribe at any time.
+        </p>
+    </div>
+</body>
+</html>
