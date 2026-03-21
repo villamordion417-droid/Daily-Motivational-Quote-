@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
-
 class MotivationalQuotesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'motivational_quotes'
+    
+    name = 'mysite.motivational_quotes'
