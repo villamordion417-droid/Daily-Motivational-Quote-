@@ -7,11 +7,15 @@ from .models import Subscription, Quote, QuoteImage
 
 def home(request):
     """Home page with latest quote and random image - no login required"""
-    latest_quote = Quote.objects.filter(is_active=True).first()
-    random_image = None
-    
-    if latest_quote:
-        random_image = latest_quote.get_random_image()
+    try:
+        latest_quote = Quote.objects.filter(is_active=True).first()
+        random_image = None
+        
+        if latest_quote:
+            random_image = latest_quote.get_random_image()
+    except Exception as e:
+        latest_quote = None
+        random_image = None
     
     context = {
         'quote': latest_quote,
