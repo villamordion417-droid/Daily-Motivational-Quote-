@@ -200,6 +200,15 @@ def upload_quote_image(request):
     return render(request, 'motivational_quotes/upload_image.html')
 
 
+def admin_redirect(request):
+    """Redirect /admin/ to in-app quotes manager for staff users."""
+    if request.user.is_authenticated and request.user.is_staff:
+        return redirect('manage_quotes')
+    # If not staff, redirect to existing Django admin login with a message.
+    messages.info(request, 'Please log in as staff to access quote management.')
+    return redirect('django_admin:login')
+
+
 @login_required
 def manage_images(request):
     """Manage uploaded images - Admin only"""

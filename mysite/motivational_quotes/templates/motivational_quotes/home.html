@@ -318,8 +318,8 @@
             {% if user.is_staff %}
                 <a href="{% url 'upload_quote_image' %}" class="btn btn-admin">Upload Image</a>
                 <a href="{% url 'manage_images' %}" class="btn btn-admin">Manage Images</a>
+                <a href="{% url 'manage_quotes' %}" class="btn btn-admin">Manage Quotes</a>
             {% endif %}
-            <a href="/admin/" class="btn btn-admin">Manage Quotes</a>
         </div>
 
         <div class="footer">

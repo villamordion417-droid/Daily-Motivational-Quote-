@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/latest/', views.latest_quote_api, name='latest_quote_api'),
     path('upload-image/', views.upload_quote_image, name='upload_quote_image'),
     path('manage-images/', views.manage_images, name='manage_images'),
+    path('manage/', views.manage_images, name='manage_quotes'),
 ]
