@@ -51,7 +51,9 @@ class Quote(models.Model):
         verbose_name_plural = "Quotes"
 
     def __str__(self):
-        return f'"{self.text[:50]}..." - {self.author}'
+        # Keep the text in quotes and add an ellipsis for long quotes while preserving readability.
+        preview = self.text[:50]
+        return f'"{preview}"... - {self.author}'
 
     def get_random_image(self):
         """Get a random active image for this quote"""

@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from motivational_quotes.models import Quote, Subscription, SentQuote
+from mysite.motivational_quotes.models import Quote, Subscription, SentQuote
 from django.utils import timezone
 
 
@@ -185,3 +185,49 @@ class LatestQuoteAPITest(TestCase):
         Quote.objects.all().delete()
         response = self.client.get(reverse('latest_quote_api'))
         self.assertEqual(response.status_code, 404)
+
+
+class ManageQuotesViewTest(TestCase):
+    """Test quote management page and actions"""
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='staffuser',
+            email='staff@example.com',
+            password='staffpass123',
+            is_staff=True
+        )
+
+    def test_manage_quotes_page_requires_staff(self):
+        response = self.client.get(reverse('manage_quotes'))
+        self.assertEqual(response.status_code, 302)
+
+        self.client.login(username='staffuser', password='staffpass123')
+        response = self.client.get(reverse('manage_quotes'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'motivational_quotes/manage_quotes.html')
+
+    def test_add_quote(self):
+        self.client.login(username='staffuser', password='staffpass123')
+        response = self.client.post(reverse('manage_quotes'), {
+            'action': 'create',
+            'quote_text': 'New quote to manage',
+            'quote_author': 'Admin',
+            'quote_category': 'inspiration',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(Quote.objects.filter(text='New quote to manage').exists())
+
+    def test_toggle_and_delete_quote(self):
+        self.client.login(username='staffuser', password='staffpass123')
+        q = Quote.objects.create(text='Existing quote', author='Tester', is_active=True)
+
+        response = self.client.post(reverse('manage_quotes'), {'action': 'toggle', 'quote_id': q.id})
+        self.assertEqual(response.status_code, 200)
+        q.refresh_from_db()
+        self.assertFalse(q.is_active)
+
+        response = self.client.post(reverse('manage_quotes'), {'action': 'delete', 'quote_id': q.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(Quote.objects.filter(id=q.id).exists())

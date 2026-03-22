@@ -245,3 +245,53 @@ def manage_images(request):
     }
     
     return render(request, 'motivational_quotes/manage_images.html', context)
+
+
+@login_required
+def manage_quotes(request):
+    """Manage motivational quotes - Admin only"""
+    if not request.user.is_staff:
+        messages.error(request, 'You do not have permission to access this page.')
+        return redirect('home')
+
+    if request.method == 'POST':
+        quote_id = request.POST.get('quote_id')
+        action = request.POST.get('action')
+
+        try:
+            if action == 'create':
+                text = request.POST.get('quote_text', '').strip()
+                author = request.POST.get('quote_author', '').strip()
+                category = request.POST.get('quote_category', '').strip() or 'motivation'
+
+                if not text:
+                    raise ValueError('Quote text cannot be empty.')
+
+                Quote.objects.create(text=text, author=author, category=category, is_active=True)
+                messages.success(request, '✅ Quote added successfully!')
+
+            elif quote_id:
+                quote = Quote.objects.get(id=quote_id)
+
+                if action == 'delete':
+                    quote.delete()
+                    messages.success(request, '✅ Quote deleted successfully!')
+                elif action == 'toggle':
+                    quote.is_active = not quote.is_active
+                    quote.save()
+                    status = 'activated' if quote.is_active else 'deactivated'
+                    messages.success(request, f'✅ Quote {status}!')
+
+        except Quote.DoesNotExist:
+            messages.error(request, 'Quote not found.')
+        except Exception as e:
+            messages.error(request, f'Error managing quote: {str(e)}')
+
+    quotes = Quote.objects.all()
+    context = {
+        'quotes': quotes,
+        'total_quotes': quotes.count(),
+        'active_quotes': quotes.filter(is_active=True).count(),
+    }
+
+    return render(request, 'motivational_quotes/manage_quotes.html', context)

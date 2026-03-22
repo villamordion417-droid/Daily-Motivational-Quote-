@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'mysite'))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
-from motivational_quotes.models import Quote
+from mysite.motivational_quotes.models import Quote
 
 # Sample quotes to add
 QUOTES = [

@@ -6,7 +6,7 @@ from django.conf import settings
 from datetime import datetime
 import random
 
-from motivational_quotes.models import Quote, Subscription, SentQuote
+from mysite.motivational_quotes.models import Quote, Subscription, SentQuote
 
 
 class Command(BaseCommand):
