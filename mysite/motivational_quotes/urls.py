@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
     path('subscribe/', views.subscribe_to_quotes, name='subscribe_quotes'),
     path('unsubscribe/', views.unsubscribe_from_quotes, name='unsubscribe_quotes'),
     path('status/', views.subscription_status, name='quote_subscription_status'),
