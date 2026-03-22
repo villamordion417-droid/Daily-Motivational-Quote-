@@ -231,3 +231,57 @@ class ManageQuotesViewTest(TestCase):
         response = self.client.post(reverse('manage_quotes'), {'action': 'delete', 'quote_id': q.id})
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Quote.objects.filter(id=q.id).exists())
+
+
+class ManageSubscribersViewTest(TestCase):
+    """Test subscriber management page and actions"""
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='staffuser',
+            email='staff@example.com',
+            password='staffpass123',
+            is_staff=True
+        )
+
+    def test_manage_subscribers_page_requires_staff(self):
+        response = self.client.get(reverse('manage_subscribers'))
+        self.assertEqual(response.status_code, 302)
+
+        self.client.login(username='staffuser', password='staffpass123')
+        response = self.client.get(reverse('manage_subscribers'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'motivational_quotes/manage_subscribers.html')
+
+    def test_activate_deactivate_subscriber(self):
+        self.client.login(username='staffuser', password='staffpass123')
+        sub = Subscription.objects.create(
+            user=self.user,
+            email='staff@example.com',
+            is_active=True
+        )
+
+        response = self.client.post(reverse('manage_subscribers'), {'action': 'deactivate', 'subscriber_id': sub.id})
+        self.assertEqual(response.status_code, 200)
+        sub.refresh_from_db()
+        self.assertFalse(sub.is_active)
+        self.assertIsNotNone(sub.unsubscribed_at)
+
+        response = self.client.post(reverse('manage_subscribers'), {'action': 'activate', 'subscriber_id': sub.id})
+        self.assertEqual(response.status_code, 200)
+        sub.refresh_from_db()
+        self.assertTrue(sub.is_active)
+        self.assertIsNone(sub.unsubscribed_at)
+
+    def test_delete_subscriber(self):
+        self.client.login(username='staffuser', password='staffpass123')
+        sub = Subscription.objects.create(
+            user=self.user,
+            email='staff@example.com',
+            is_active=True
+        )
+
+        response = self.client.post(reverse('manage_subscribers'), {'action': 'delete', 'subscriber_id': sub.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(Subscription.objects.filter(id=sub.id).exists())

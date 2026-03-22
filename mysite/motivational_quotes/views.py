@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
+from django.utils import timezone
 from .models import Subscription, Quote, QuoteImage
 
 
@@ -295,3 +296,47 @@ def manage_quotes(request):
     }
 
     return render(request, 'motivational_quotes/manage_quotes.html', context)
+
+
+@login_required
+def manage_subscribers(request):
+    """Manage subscribers - Admin only"""
+    if not request.user.is_staff:
+        messages.error(request, 'You do not have permission to access this page.')
+        return redirect('home')
+
+    if request.method == 'POST':
+        subscriber_id = request.POST.get('subscriber_id')
+        action = request.POST.get('action')
+
+        try:
+            subscriber = Subscription.objects.get(id=subscriber_id)
+
+            if action == 'deactivate':
+                subscriber.is_active = False
+                subscriber.unsubscribed_at = timezone.now()
+                subscriber.save()
+                messages.success(request, f'✅ Subscriber "{subscriber.user.username}" deactivated!')
+            elif action == 'activate':
+                subscriber.is_active = True
+                subscriber.unsubscribed_at = None
+                subscriber.save()
+                messages.success(request, f'✅ Subscriber "{subscriber.user.username}" activated!')
+            elif action == 'delete':
+                username = subscriber.user.username
+                subscriber.delete()
+                messages.success(request, f'✅ Subscriber "{username}" deleted!')
+
+        except Subscription.DoesNotExist:
+            messages.error(request, 'Subscriber not found.')
+        except Exception as e:
+            messages.error(request, f'Error managing subscriber: {str(e)}')
+
+    subscribers = Subscription.objects.all().select_related('user')
+    context = {
+        'subscribers': subscribers,
+        'total_subscribers': subscribers.count(),
+        'active_subscribers': subscribers.filter(is_active=True).count(),
+    }
+
+    return render(request, 'motivational_quotes/manage_subscribers.html', context)

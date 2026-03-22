@@ -10,4 +10,5 @@ urlpatterns = [
     path('upload-image/', views.upload_quote_image, name='upload_quote_image'),
     path('manage-images/', views.manage_images, name='manage_images'),
     path('manage/', views.manage_quotes, name='manage_quotes'),
+    path('manage-subscribers/', views.manage_subscribers, name='manage_subscribers'),
 ]
