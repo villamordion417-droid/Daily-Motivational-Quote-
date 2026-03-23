@@ -1,21 +1,17 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/base.html" %}
 {% load static %}
 
-{% block title %}{{ site_title }} | admin{% endblock %}
+{% block title %}Daily Motivational Quotes Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Daily Motivational Quotes Admin</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+    <div class="custom-admin-subtitle">Manage quotes, subscriptions, images, and sent records with style.</div>
+{% endblock %}
 
 {% block extrahead %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'admin/custom_admin.css' %}">
-{% endblock %}
-
-{% block branding %}
-<div class="custom-admin-branding">
-    <h1>Daily Motivational Quotes</h1>
-    <p>Admin Console</p>
-</div>
-{% endblock %}
-
-{% block nav-global %}
-    {{ block.super }}
-    <div class="custom-admin-subtitle">Manage quotes, subscriptions, images, and sent records with style.</div>
 {% endblock %}
