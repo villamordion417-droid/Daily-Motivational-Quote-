@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 from mysite.motivational_quotes import views as quotes_views
@@ -24,9 +25,12 @@ from mysite import views as mysite_views
 urlpatterns = [
     path('health/', mysite_views.health_check, name='health_check'),
     path('', quotes_views.home, name='home'),
-    # Redirect old /admin/ target to in-app manager for staff; fallback to real admin login via /django-admin/
-    path('admin/', quotes_views.admin_redirect, name='admin_redirect'),
-    path('django-admin/', admin.site.urls),
+    # Official Django admin endpoint; make /admin/ available for admin console.
+    path('admin/', admin.site.urls),
+    # Keep legacy /django-admin/ working without duplicate admin namespace.
+    path('django-admin/', RedirectView.as_view(url='/admin/', permanent=False)),
+    # Optional legacy redirect route for staff dashboard.
+    path('admin-redirect/', quotes_views.admin_redirect, name='admin_redirect'),
     path('quotes/', include('mysite.motivational_quotes.urls')),
 ]
 

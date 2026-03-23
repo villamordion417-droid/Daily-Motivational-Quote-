@@ -202,12 +202,13 @@ def upload_quote_image(request):
 
 
 def admin_redirect(request):
-    """Redirect /admin/ to in-app quotes manager for staff users."""
+    """Redirect /admin-redirect/ to in-app quotes manager for staff users."""
     if request.user.is_authenticated and request.user.is_staff:
         return redirect('manage_quotes')
-    # If not staff, redirect to existing Django admin login with a message.
+
+    # If not staff, go to the Django admin login path directly to avoid namespace reverse errors.
     messages.info(request, 'Please log in as staff to access quote management.')
-    return redirect('django_admin:login')
+    return redirect('/django-admin/login/')
 
 
 @login_required
