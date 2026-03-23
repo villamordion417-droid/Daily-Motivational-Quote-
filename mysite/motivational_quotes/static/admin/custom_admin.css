@@ -1,0 +1,50 @@
+/* Custom admin styling for motivational quotes application */
+body#django-admin {
+    background: linear-gradient(135deg, #f7f4ff 0%, #dfe8ff 100%);
+}
+
+#header {
+    background: linear-gradient(90deg, #4549c5, #7f51d0);
+    border-bottom: 4px solid #7c4aed;
+}
+
+#header h1, #header h1 a {
+    color: #ffffff !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#user-tools {
+    color: #fff;
+}
+
+.custom-admin-branding {
+    padding: 10px 20px;
+    color: #453379;
+    background: #ffffff;
+    border: 1px solid #d4c3f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.08);
+}
+
+.custom-admin-branding h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #1b0d77;
+}
+
+.custom-admin-subtitle {
+    margin-top: 10px;
+    padding: 8px 12px;
+    color: #4a418b;
+    background: rgba(69, 73, 197, .12);
+    border-radius: 6px;
+    font-style: italic;
+}
+
+#content h1 {
+    color: #3b348f;
+}
+
+.mod-list tbody tr:hover {
+    background: rgba(75, 69, 177, .08);
+}

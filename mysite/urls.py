@@ -37,3 +37,13 @@ urlpatterns = [
 # Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+from django.contrib.auth.models import User
+
+# This script checks if 'admin' exists. If not, it creates it.
+try:
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'MyPassword123')
+        print("Superuser created successfully!")
+except:
+    pass

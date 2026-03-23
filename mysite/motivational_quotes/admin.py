@@ -2,6 +2,12 @@ from django.contrib import admin
 from .models import Quote, Subscription, SentQuote, QuoteImage
 
 
+# Admin site branding and title for a cleaner look
+admin.site.site_header = 'Daily Motivational Quotes Admin'
+admin.site.site_title = 'Motivation Admin'
+admin.site.index_title = 'Quote Management Dashboard'
+
+
 @admin.register(QuoteImage)
 class QuoteImageAdmin(admin.ModelAdmin):
     list_display = ('title', 'uploaded_at', 'is_active', 'get_image_preview')
